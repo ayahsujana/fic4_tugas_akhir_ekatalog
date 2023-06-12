@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 class ProductDatasources {
   Future<ProductResponseModel> createProduct(ProductModel model) async {
     // try {
-    final newMap = model.toMap();
     var headers = {'Content-Type': 'application/json'};
     print(model.toJson());
     final response = await http.post(
@@ -42,9 +41,9 @@ class ProductDatasources {
     return ProductResponseModel.fromJson(response.body);
   }
 
-  Future<List<ProductResponseModel>> getAllProduct() async {
+  Future<List<ProductResponseModel>> getAllProduct(int page) async {
     final response = await http.get(
-      Uri.parse('https://api.escuelajs.co/api/v1/products'),
+      Uri.parse('https://api.escuelajs.co/api/v1/products/?offset=$page&limit=10'),
     );
 
     final result = List<ProductResponseModel>.from(jsonDecode(response.body)
