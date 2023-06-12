@@ -28,7 +28,7 @@ class AuthDatasource {
   }
 
   Future<ProfileResponseModel> getProfile() async {
-    final token = await AuthLocalStorage().getToken();
+    final token = AuthLocalStorage().getToken();
     var headers = {'Authorization': 'Bearer $token'};
     final response = await http.get(
       Uri.parse('https://api.escuelajs.co/api/v1/auth/profile'),

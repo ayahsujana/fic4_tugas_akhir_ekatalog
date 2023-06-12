@@ -166,7 +166,13 @@ class _RegisterPageState extends State<RegisterPage> {
                       builder: (context, state) {
                         if (state is RegisterLoading) {
                           return const Center(
-                            child: CircularProgressIndicator(),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CircularProgressIndicator(),
+                                Text('Please wait...')
+                              ],
+                            ),
                           );
                         }
                         return ElevatedButton(
@@ -189,11 +195,10 @@ class _RegisterPageState extends State<RegisterPage> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)
-                            )
-                          ),
+                              padding:
+                                  const EdgeInsets.fromLTRB(40, 15, 40, 15),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10))),
                           child: const Text(
                             'Sign up',
                             style: TextStyle(
@@ -212,12 +217,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         const Text('Already registered?'),
                         TextButton(
                           onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const LoginPage(),
-                              ),
-                            );
+                            Get.offAll(const LoginPage());
                           },
                           child: const Text('Sign in'),
                         ),

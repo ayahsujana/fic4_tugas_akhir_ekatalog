@@ -1,13 +1,12 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:fic4_flutter_auth_bloc/presentation/pages/register_page.dart';
+import 'package:fic4_flutter_auth_bloc/presentation/pages/root_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 import '../../bloc/login/login_bloc.dart';
-import '../../bloc/register/register_bloc.dart';
 import '../../data/models/request/login_model.dart';
-import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -114,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                                 content: Text('Success Login')),
                           );
 
-                          Get.offAll(const HomePage());
+                          Get.offAll(const Home());
                         }
                       },
                       builder: (context, state) {
@@ -172,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
                         const Text('Belum Punya Akun?'),
                         TextButton(
                           onPressed: () {
-                            Get.to(const RegisterPage());
+                            Get.offAll(const RegisterPage());
                           },
                           child: const Text('Register',
                               style: TextStyle(
