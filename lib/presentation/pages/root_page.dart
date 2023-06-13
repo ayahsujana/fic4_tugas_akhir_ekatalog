@@ -1,8 +1,11 @@
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:fic4_flutter_auth_bloc/bloc/product/get_pagination_bloc/get_pagination_product_bloc.dart';
+import 'package:fic4_flutter_auth_bloc/bloc/product_wishlist/product_cubit_cubit.dart';
 import 'package:fic4_flutter_auth_bloc/presentation/widget/add_product_widget.dart';
 import 'package:fic4_flutter_auth_bloc/presentation/widget/logout_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import 'all_products_page.dart';
 import 'wishlist_products_page.dart';
@@ -16,7 +19,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   late TabController tabController;
-  
 
   @override
   void initState() {
@@ -51,9 +53,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ],
         ),
         actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(MdiIcons.cartHeart),
+          ),
           IconButton(onPressed: () {}, icon: const Icon(Icons.account_box)),
           IconButton(
-              onPressed: () => LogoutFunction().logoutNow(context), icon: const Icon(Icons.logout)),
+              onPressed: () => LogoutFunction().logoutNow(context),
+              icon: const Icon(Icons.logout)),
         ],
       ),
       body: Column(
@@ -78,6 +85,4 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       ),
     );
   }
-
-  
 }

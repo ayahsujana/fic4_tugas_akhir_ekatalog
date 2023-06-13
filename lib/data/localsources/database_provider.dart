@@ -8,7 +8,6 @@ class DatabaseProvider {
 
   DatabaseProvider._init();
 
-  // retorna instancia do banco de dados
   Future<Database> get db async {
     if (_db != null) {
       return _db!;
@@ -18,61 +17,53 @@ class DatabaseProvider {
     return _db!;
   }
 
-  // cria o banco de dados
   Future<Database> _useDatabe(String dbName) async {
     final databasePath = await getDatabasesPath();
     final path = join(databasePath, dbName);
-
-    // descomente para deletar o banco de dados
-    // await deleteDatabase(path);
 
     return await openDatabase(
       path,
       version: 1,
       onCreate: (Database db, int version) async {
         await db.execute(
-            'CREATE TABLE product(id INTEGER PRIMARY KEY, ${ProductFields.title} TEXT, ${ProductFields.price} INTEGER, ${ProductFields.description} TEXT)');
+            'CREATE TABLE $tableProduct(id INTEGER PRIMARY KEY, ${ProductFields.title} TEXT, ${ProductFields.price} INTEGER, ${ProductFields.description} TEXT)');
       },
     );
   }
 
-  // buscar notas
   Future<List<ProductModel>> getProduct() async {
     final db = await instance.db;
-    final result = await db.rawQuery('select * from product order by id');
-
-    return result.map((json) => ProductModel.fromMap(json)).toList();
+    const orderBy = '${ProductFields.id} ASC';
+    final result = await db.query(tableProduct, orderBy: orderBy);
+    print('GET PRODUCT DATABASE: $result');
+    return result.map((json) => ProductModel.fromJson(json)).toList();
   }
 
-  // salvar nota
   Future<ProductModel> saveProduct(ProductModel product) async {
     final db = await instance.db;
     final id = await db.rawInsert(
-        'insert into product (${ProductFields.title}, ${ProductFields.price}, ${ProductFields.description}) values (?, ?, ?)',
+        'insert into $tableProduct (${ProductFields.title}, ${ProductFields.price}, ${ProductFields.description}) values (?, ?, ?)',
         [product.title, product.price, product.description]);
-    print('ID: $id');
+
     return product.copyWith(id: id);
   }
 
-  // atualizar nota
   Future<ProductModel> updateProduct(ProductModel product) async {
     final db = await instance.db;
     await db.rawUpdate(
-        'update product set ${ProductFields.title} = ?, ${ProductFields.price} = ?, ${ProductFields.description} = ? where id = ?',
+        'update $tableProduct set ${ProductFields.title} = ?, ${ProductFields.price} = ?, ${ProductFields.description} = ? where id = ?',
         [product.title, product.price, product.description, product.id]);
     return product;
   }
 
-  // deletar nota
   Future<int> deleteProduct(int id) async {
     final db = await instance.db;
-    return await db.rawDelete('delete from product where id = ?', [id]);
+    return await db.rawDelete('delete from $tableProduct where id = ?', [id]);
   }
 
-  // deletar todas as notas
   Future<int> deleteAllProduct() async {
     final db = await instance.db;
-    return await db.rawDelete('delete from product');
+    return await db.rawDelete('delete from $tableProduct');
   }
 
   // fechar banco de dados

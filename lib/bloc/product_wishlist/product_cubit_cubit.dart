@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
+import 'package:fic4_flutter_auth_bloc/bloc/product/get_pagination_bloc/get_pagination_product_bloc.dart';
 
 import 'package:fic4_flutter_auth_bloc/data/models/request/product_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,15 +21,14 @@ class ProductCubitCubit extends Cubit<ProductCubitState> {
     emit(ProductCubitLoading());
     try {
       final product = await _dbProvider.getProduct();
-      emit(ProductCubitLoaded(product: product));
+      emit(ProductCubitLoaded(product: product, wishlist: product.length));
+      print('JUMLAH BADGE: ${product.length}');
     } catch (e) {
       emit(ProductCubitError(error: e.toString()));
     }
   }
 
   Future<void> deleteProduct(int id) async {
-    emit(ProductCubitLoading());
-    await Future.delayed(const Duration(seconds: 2));
     try {
       await _dbProvider.deleteProduct(id);
     } catch (e) {
@@ -38,14 +38,8 @@ class ProductCubitCubit extends Cubit<ProductCubitState> {
 
   Future<void> addproduct(ProductModel product) async {
     emit(ProductCubitLoading());
-    await Future.delayed(const Duration(seconds: 2));
     try {
-      if (product.id == null) {
-        await _dbProvider.saveProduct(product);
-      } else {
-        await _dbProvider.updateProduct(product);
-      }
-      emit(ProductCubitSuccess());
+      await _dbProvider.saveProduct(product);
     } catch (e) {
       emit(ProductCubitError(error: e.toString()));
     }

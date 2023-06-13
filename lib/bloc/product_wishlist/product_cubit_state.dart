@@ -17,8 +17,10 @@ class ProductCubitLoading extends ProductCubitState {
 
 class ProductCubitLoaded extends ProductCubitState {
   final List<ProductModel> product;
+  final int wishlist;
   const ProductCubitLoaded({
     required this.product,
+    required this.wishlist,
   });
 
   @override

@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:email_validator/email_validator.dart';
+import 'package:fic4_flutter_auth_bloc/presentation/pages/success_register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -160,7 +161,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 content: Text(
                                     'success register with id: ${state.model.id}')),
                           );
-                          Get.offAll(const LoginPage());
+                          Get.offAll(const SuccessRegisterPage(), arguments: {'email':emailController!.text, 'password':passwordController!.text});
                         }
                       },
                       builder: (context, state) {

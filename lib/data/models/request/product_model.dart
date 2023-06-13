@@ -69,10 +69,18 @@ class ProductModel {
     );
   }
 
-  String toJson() => json.encode(toMap());
+factory ProductModel.fromJson(Map<String, dynamic> map) {
+    return ProductModel(
+      id: map[ProductFields.id]?.toInt() ?? 0,
+      title: map[ProductFields.title] ?? '',
+      price: map[ProductFields.price]?.toInt() ?? 0,
+      description: map[ProductFields.description] ?? '',
+      categoryId: map[ProductFields.categoryId]?.toInt() ?? 0,
+    );
+  }
+  
 
-  factory ProductModel.fromJson(String source) =>
-      ProductModel.fromMap(json.decode(source));
+  String toJson() => json.encode(toMap());
 
   ProductModel copyWith({
     int? id,

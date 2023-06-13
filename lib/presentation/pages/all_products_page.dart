@@ -2,7 +2,6 @@
 import 'dart:async';
 
 import 'package:fic4_flutter_auth_bloc/bloc/product_wishlist/product_cubit_cubit.dart';
-import 'package:fic4_flutter_auth_bloc/data/localsources/database_provider.dart';
 import 'package:fic4_flutter_auth_bloc/data/models/request/product_model.dart';
 import 'package:fic4_flutter_auth_bloc/presentation/widget/edit_product_widget.dart';
 import 'package:flutter/material.dart';
